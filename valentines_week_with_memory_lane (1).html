@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Week 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300,400,500,600,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            background: #faf8f6;
+            color: #000;
+            cursor: none;
+        }
+
+        /* Dynamic Blob Cursor */
+        #blobCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: normal;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: transparent;
+        }
+
+        .header-left h1 {
+            font-size: 48px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            line-height: 1;
+            color: #000;
+        }
+
+        .header-left p {
+            font-size: 14px;
+            letter-spacing: 3px;
+            margin-top: 8px;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+
+        .header-right {
+            font-size: 16px;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .scroll-container {
+            position: relative;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 100vh;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 
+            /* 20% */
+            ; /* Push image down a bit without cropping top */
+        }
+
+        .hero-background-alt {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 0 40px;
+            color: #fff;
+            margin-top: 500px;
+        }
+
+        .hero-title {
+            font-size: 120px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            line-height: 1;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Day Section */
+        .day-section {
+            position: relative;
+            width: 100vw;
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            padding: 120px 60px 60px;
+            overflow: hidden;
+        }
+
+        /* Day section background layers */
+        .day-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 0;
+            opacity: 0.25;
+            filter: brightness(1.4) saturate(0.6);
+        }
+
+        .day-background-alt {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            clip-path: polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%);
+            z-index: 1;
+            opacity: 1;
+            filter: brightness(1.1) saturate(1.2);
+        }
+
+        .day-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(250, 248, 246, 0.75);
+            backdrop-filter: blur(0.5px);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .day-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .day-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .day-number {
+            font-size: 100px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            opacity: 0.08;
+            line-height: 0.8;
+        }
+
+        .day-name {
+            font-size: 72px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+        }
+
+        .day-date {
+            font-size: 18px;
+            letter-spacing: 4px;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+
+        /* Horizontal Card Stack */
+        .cards-container {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            height: 500px;
+            margin: 0 auto 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            position: absolute;
+            width: 350px;
+            height: 480px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            background: #fff;
+            will-change: transform, box-shadow;
+        }
+
+        /* Horizontal stacking - cards overlap */
+        .card {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:nth-child(1) {
+            left: 15%;
+            z-index: 1;
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        .card:nth-child(2) {
+            left: 50%;
+            z-index: 2;
+            transform: translateX(-50%) scale(0.98);
+        }
+
+        .card:nth-child(3) {
+            left: 85%;
+            z-index: 1;
+            transform: translateX(-50%) scale(0.95);
+        }
+
+        /* Smooth hover effect on cards */
+        .card:not(.active):hover {
+            transform: translateX(-50%) scale(1.02) translateY(-10px) !important;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+            z-index: 5 !important;
+        }
+
+        /* When a card is clicked/active */
+        .card.active {
+            z-index: 10 !important;
+            transform: translateX(-50%) scale(1.08) !important;
+            left: 50% !important;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Base styling for non-active cards when one is active */
+        .cards-container.has-active .card:not(.active) {
+            opacity: 0.7;
+            filter: brightness(0.8);
+            z-index: 1 !important;
+            transform: translateX(-50%) scale(0.85) !important;
+        }
+
+        .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .card-main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 1;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(1);
+        }
+
+        .card-alt-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(1) saturate(1) contrast(1);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scale(1.1);
+        }
+
+        /* Hover effect for cards - fade to alt image with zoom */
+        .card:hover .card-main-image {
+            opacity: 0;
+            transform: scale(1.05);
+        }
+
+        .card:hover .card-alt-image {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+            color: #fff;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .card.active .card-overlay {
+            transform: translateY(0);
+        }
+
+        .card-label {
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+
+        .card-text {
+            font-size: 28px;
+            line-height: 1.4;
+            font-weight: 300;
+        }
+
+        /* Quote Section */
+        .day-quote {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .quote-text {
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.5;
+            letter-spacing: 1px;
+            font-style: italic;
+            color: #333;
+        }
+
+        /* Memory Lane Section - Helmet Grid Style */
+        .memory-lane-section {
+            margin-top: 100px;
+            padding: 80px 40px;
+            background: #000;
+        }
+
+        .memory-lane-title {
+            text-align: center;
+            font-size: 56px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .memory-lane-subtitle {
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            margin-bottom: 80px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .memory-item-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 407/411;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+
+        .memory-item-wrapper:hover {
+            transform: translateY(-10px);
+        }
+
+        .memory-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .memory-frame svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .memory-frame.is-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .memory-item-wrapper:hover .memory-frame.is-overlay {
+            opacity: 1;
+        }
+
+        .memory-frame.is-overlay path {
+            stroke: #9EFF00;
+        }
+
+        .memory-frame.is-base path {
+            stroke: #333;
+        }
+
+        .memory-img-container {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 40px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .memory-base-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.5s ease;
+        }
+
+        .memory-hover-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .memory-item-wrapper:hover .memory-base-img {
+            opacity: 0;
+        }
+
+        .memory-item-wrapper:hover .memory-hover-img {
+            opacity: 1;
+        }
+
+        .memory-label {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            right: 20px;
+            z-index: 3;
+            color: #fff;
+            text-align: left;
+        }
+
+        .memory-day-name {
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .memory-date {
+            font-size: 14px;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 1400px) {
+            .memory-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .memory-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .memory-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .memory-lane-section {
+                padding: 60px 20px;
+            }
+        }
+
+        /* Scroll Hint */
+        .scroll-hint {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.5;
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 100;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .header-left h1 {
+                font-size: 36px;
+            }
+
+            .hero-title {
+                font-size: 80px;
+            }
+
+            .day-name {
+                font-size: 56px;
+            }
+
+            .card {
+                width: 280px;
+                height: 400px;
+            }
+
+            .quote-text {
+                font-size: 36px;
+            }
+
+            .memory-lane-title {
+                font-size: 42px;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+
+            .header-left h1 {
+                font-size: 28px;
+            }
+
+            .hero-title {
+                font-size: 56px;
+            }
+
+            .day-section {
+                padding: 100px 30px 60px;
+            }
+
+            .day-name {
+                font-size: 40px;
+            }
+
+            .card {
+                width: 240px;
+                height: 340px;
+            }
+
+            .card:nth-child(1) {
+                left: 10%;
+            }
+
+            .card:nth-child(3) {
+                right: 10%;
+            }
+
+            .quote-text {
+                font-size: 28px;
+            }
+
+            .card-text {
+                font-size: 20px;
+            }
+
+            .memory-lane-title {
+                font-size: 32px;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 20px;
+            }
+
+            .memory-lane-section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="blobCanvas"></canvas>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <h1>Valentine's Week</h1>
+            <p>February 7-14, 2026</p>
+        </div>
+        <div class="header-right">2026</div>
+    </div>
+
+    <!-- Scroll Container -->
+    <div class="scroll-container" id="scrollContainer">
+        <!-- Hero Section -->
+        <section class="hero-section" id="heroSection">
+            <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=1920&h=1080&fit=crop" alt="Hero" class="hero-background" id="heroMain">
+            <img src="https://res.cloudinary.com/da02bfpol/image/upload/v1770461440/IMG_5731_icmvzo.jpg" alt="Hero Alt" class="hero-background-alt" id="heroAlt">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h2 class="hero-title">Love & Life Journey</h2>
+                <p class="hero-subtitle">Eight Days. Two souls. One Story. Countless memories.</p>
+                <p class ="hero-subtitle">A celebration of us , of our journey , of our tomorrow.</p>
+                <p class="hero-subtitle">Though miles apart, forever close at heart.</p>
+                <p class="hero-subtitle">Happy Valentine's Week, Kanna.</p>
+            </div>
+        </section>
+
+        <!-- Day Sections will be inserted here -->
+        <div id="daySections"></div>
+    </div>
+
+    <!-- Scroll Hint -->
+    <div class="scroll-hint">Scroll to explore</div>
+
+    <script>
+        const days = [
+            {
+                date: 7,
+                name: "Rose Day",
+                dateText: "February 7",
+                icon: "🌹",
+                background: {
+                    alt: "https://png.pngtree.com/png-clipart/20241129/original/pngtree-beautiful-roses-in-different-colors-png-image_17420512.png",
+                    main: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=1920&h=1080&fit=crop"
+                },
+                images: [
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461437/IMG_3125_mlas4r.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770464107/IMG_3137_fnhm3n.jpg",
+                        text: "Every petal tells our story"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770462185/PXL_20251228_234012868.NIGHT_vvw8jk.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770464104/PXL_20251228_234019338.NIGHT_vskzzt.jpg",
+                        text: "Like a rose, you bloom in my heart"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770462692/IMG_0849_v2j5a2.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461439/IMG_5825_m5vgll.jpg",
+                        text: "In gardens of memory , you're the most beautiful"
+                    }
+                ],
+                quote: "In every garden , in every dream , you are the rose i cherish most.Happy Rose Day, Kanna."
+            },
+            {
+                date: 8,
+                name: "Propose Day",
+                dateText: "February 8",
+                icon: "💍",
+                background: {
+                    main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770446711/PXL_20250925_202855835.MP_lrk9dz.jpg",
+                    alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770528449/20251212_162735-IMG_STYLE_g6uc0k.jpg"
+                },
+                images: [
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461436/IMG_3643_2_tdusa9.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770526825/IMG_3644_xuj8xd.jpg",
+                        text: "Every moment with you is a yes"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770527613/IMG_3309_jjgmgr.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770527613/IMG_3299_f9bcxq.jpg",
+                        text: "One was never enough, so I chose forever with you"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770528448/Snapchat-1680225800_lgu8nn.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770528450/PXL_20250920_053049927.MP_fyd97b.jpg",
+                        text: "You're my forever answer"
+                    }
+                ],
+                quote: "In every universe, I choose you. In every lifetime, I find you. Happy Propose Day, Kanna."
+            },
+            {
+                date: 9,
+                name: "Chocolate Day",
+                dateText: "February 9",
+                icon: "🍫",
+                background: {
+                    main: "https://images.unsplash.com/photo-1511381939415-e44015466834?w=1920&h=1080&fit=crop",
+                    alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770577930/20260106_144506-IMG_STYLE_qwussn.jpg"
+                },
+                images: [
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770577931/IMG_4197_xzmg1c.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770577928/PXL_20251123_201159379.PORTRAIT_htye5o.jpg",
+                        text: "All the food couldn't make you smile, but one boba lit up your world—just like you light up mine"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770579439/PXL_20250608_043539621.PORTRAIT_fdwxsj.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461437/IMG_3151_uky41r.jpg",
+                        text: "One look into your eyes, and my heart melts all over again"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770579750/Snapchat-180690035_t3cbx8.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770579752/PXL_20250920_044802140_hpxiwo.jpg",
+                        text: "Chocolate ice cream is sweet, but life with you is the sweetest treat"
+                    }
+                ],
+                quote: "Every moment with you is sweeter than chocolate. Happy Chocolate Day, Kanna."
+            },
+            {
+                date: 10,
+                name: "Teddy Day",
+                dateText: "February 10",
+                icon: "🧸",
+                background: {
+                    main: "https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?w=1920&h=1080&fit=crop",
+                    alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770623165/1D97AD4A-4B8D-4F1D-A16A-1064A2F82230-IMG_STYLE_v9ezrb.jpg"
+                },
+                images: [
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770623597/IMG_2829_s5zcoi.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770623598/IMG_2883_k14iez.jpg",
+                        text: "In your embrace, I find my peace, my home, my safe haven from the world"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770621784/teddy_main_oqspzz.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770621784/teddy_alt_l2pmhf.jpg",
+                        text: "We found comfort in teddy bears, until we found it in each other's arms"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770624459/0142A485-D0FC-4C61-9A2F-80EF65EBD136-IMG_STYLE_o6s9fc.png",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770624458/9395D03B-2A95-4EA7-A33F-D93FEBCCB234-IMG_STYLE_yzinsx.png",
+                        text: "Remember , Always there for you"
+                    }
+                ],
+                quote: "Like a teddy bear's gentle embrace, you bring me comfort in every moment—my warmth when the world feels cold, my strength when the days grow heavy. Happy Teddy Day, Kanna."
+            },
+            {
+                date: 11,
+                name: "Promise Day",
+                dateText: "February 11",
+                icon: "🤝",
+                background: {
+                    main: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1920&h=1080&fit=crop",
+                    alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770705494/DSC_0495_zsztet.jpg"
+                },
+                images: [
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770709156/PXL_20250831_204231284.MP_ciqz9w.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770710311/copy_of_snapchat-1826246023_funxkt_76e854.jpg",
+                        text: "I promise to be your arjun reddy for life"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770707913/IMG_4282_ffwm5c.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770707913/IMG_4291_qiev4b.jpg",
+                        text: "I promise the smile on your face will always be my priority"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770709150/PXL_20250831_221744271.MP_yobhwu.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770707913/IMG_1217_wlld02.jpg",
+                        text: "Through storms and sunshine , I promise to stand by you"
+                    }
+                ],
+                quote: "My vow to you is eternal, written in the stars, not bound by seasons or time—a promise that lives in every heartbeat, every breath, every moment we share. Happy Promise Day, Kanna."
+            },
+            {
+                date: 12,
+                name: "Hug Day",
+                dateText: "February 12",
+                icon: "🤗",
+                background: {
+                    main: "https://images.unsplash.com/photo-1516589091380-5d8e87df6999?w=1920&h=1080&fit=crop",
+                    alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871785/PXL_20250606_082515415.MP_casuey.jpg"
+                },
+                images: [
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871786/IMG_3638_upadlb.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871785/IMG_3674_ibtxyp.jpg",
+                        text: "In your arms, I find peace and warmth"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461438/IMG_3764_cce5l2.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871786/IMG_3844_uqx8ed.jpg",
+                        text: "Home is where i lean my head on your shoulder and my heart feels safe"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770872150/IMG_8780_xihhg1.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770872150/IMG_8811_dqesva.jpg",
+                        text: "Every embrace heals and strengthens us."
+                    }
+                ],
+                quote: "Every hug is a silent promise, a wordless vow that says 'I'm here for you'—a reminder that no matter where life takes us, we always have each other to hold onto. Happy Hug Day, Kanna."
+            },
+            {
+                date: 13,
+                name: "Kiss Day",
+                dateText: "February 13",
+                icon: "💋",
+                background: {
+                    main: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=1920&h=1080&fit=crop",
+                    alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770460183/20251120_145440-IMG_STYLE_ptn24g.jpg"
+                },
+                images: [
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956142/Snapchat-89138653_arweeh.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956142/Snapchat-276065440_aymp4u.jpg",
+                        text: "Healthy food on the table, but her favorite dish? My cheeks, apparently"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956142/IMG_8846_msldqf.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956142/IMG_8732_lfdjyj.jpg",
+                        text: "Time stops when we kiss and the world fades away"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956143/IMG_6840_zr13yf.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956143/IMG_6810_lzdm1h.jpg",
+                        text: "Sealed with forever"
+                    }
+                ],
+                quote: "Every kiss is a promise of forever, a silent vow that says 'I love you' without words.Happy Kiss Day, Kanna."
+            },
+            {
+                date: 14,
+                name: "Valentine's Day",
+                dateText: "February 14",
+                icon: "❤️",
+                background: {
+                    main: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=1920&h=1080&fit=crop",
+                    alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461440/IMG_5731_icmvzo.jpg"
+                },
+                images: [
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461437/IMG_3125_mlas4r.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770464107/IMG_3137_fnhm3n.jpg",
+                        text: "Every memory, every moment, all leading to this day"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461436/IMG_3643_2_tdusa9.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770526825/IMG_3644_xuj8xd.jpg",
+                        text: "A week of love, a lifetime of memories"
+                    },
+                    { 
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871786/IMG_3638_upadlb.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871785/IMG_3674_ibtxyp.jpg",
+                        text: "Forever and always, my Valentine"
+                    }
+                ],
+                quote: "My eternal valentine, forever and always",
+                memoryLane: [
+                    {
+                        day: "Rose Day",
+                        baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461437/IMG_3125_mlas4r.jpg",
+                        hoverImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770464107/IMG_3137_fnhm3n.jpg",
+                        date: "Feb 7"
+                    },
+                    {
+                        day: "Propose Day",
+                        baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461436/IMG_3643_2_tdusa9.jpg",
+                        hoverImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770526825/IMG_3644_xuj8xd.jpg",
+                        date: "Feb 8"
+                    },
+                    {
+                        day: "Chocolate Day",
+                        baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770577931/IMG_4197_xzmg1c.jpg",
+                        hoverImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770577928/PXL_20251123_201159379.PORTRAIT_htye5o.jpg",
+                        date: "Feb 9"
+                    },
+                    {
+                        day: "Teddy Day",
+                        baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770621784/teddy_main_oqspzz.jpg",
+                        hoverImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770621784/teddy_alt_l2pmhf.jpg",
+                        date: "Feb 10"
+                    },
+                    {
+                        day: "Promise Day",
+                        baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770707913/IMG_4282_ffwm5c.jpg",
+                        hoverImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770707913/IMG_4291_qiev4b.jpg",
+                        date: "Feb 11"
+                    },
+                    {
+                        day: "Hug Day",
+                        baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871786/IMG_3638_upadlb.jpg",
+                        hoverImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871785/IMG_3674_ibtxyp.jpg",
+                        date: "Feb 12"
+                    },
+                    {
+                        day: "Kiss Day",
+                        baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956142/IMG_8846_msldqf.jpg",
+                        hoverImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956142/IMG_8732_lfdjyj.jpg",
+                        date: "Feb 13"
+                    }
+                ]
+            }
+        ];
+
+        // Get EST Date
+        function getESTDate() {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const est = new Date(utc + (3600000 * -5));
+            return est.getDate();
+        }
+
+        // Heart-Shaped Cursor with Animation
+        const canvas = document.getElementById('blobCanvas');
+        const ctx = canvas.getContext('2d');
+        const heroAlt = document.getElementById('heroAlt');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let blobX = mouseX;
+        let blobY = mouseY;
+        
+        const blobs = [];
+        const maxBlobs = 5;
+        let time = 0;
+
+        class Blob {
+            constructor(x, y, isTrail = false) {
+                this.x = x;
+                this.y = y;
+                this.vx = 0;
+                this.vy = 0;
+                this.baseSize = isTrail ? 70 : 100;
+                this.opacity = isTrail ? 0.08 : 0;
+                this.life = isTrail ? 1 : 2;
+                this.maxLife = this.life;
+                this.isTrail = isTrail;
+                this.rotation = 0;
+                this.scale = 1;
+            }
+
+            update(targetX, targetY) {
+                if (!this.isTrail) {
+                    const dx = targetX - this.x;
+                    const dy = targetY - this.y;
+                    this.vx += dx * 0.1;
+                    this.vy += dy * 0.1;
+                    this.vx *= 0.8;
+                    this.vy *= 0.8;
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    this.scale = 1 + Math.sin(time * 3) * 0.1;
+                } else {
+                    this.life -= 0.025;
+                    this.opacity = (this.life / this.maxLife) * 0.08;
+                    this.y -= 0.5;
+                }
+            }
+
+            drawHeart(x, y, size) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.scale(this.scale, this.scale);
+                ctx.rotate(this.rotation);
+                
+                ctx.beginPath();
+                ctx.moveTo(0, size * 0.3);
+                
+                ctx.bezierCurveTo(-size * 0.5, -size * 0.3, -size, -size * 0.1, -size, size * 0.3);
+                ctx.bezierCurveTo(-size, size * 0.5, -size * 0.5, size * 0.7, 0, size);
+                
+                ctx.bezierCurveTo(size * 0.5, size * 0.7, size, size * 0.5, size, size * 0.3);
+                ctx.bezierCurveTo(size, -size * 0.1, size * 0.5, -size * 0.3, 0, size * 0.3);
+                
+                ctx.closePath();
+                
+                const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, size);
+                gradient.addColorStop(0, `rgba(255, 100, 150, ${this.opacity * 0.4})`);
+                gradient.addColorStop(0.5, `rgba(255, 150, 180, ${this.opacity * 0.2})`);
+                gradient.addColorStop(1, `rgba(255, 200, 220, 0)`);
+                
+                ctx.fillStyle = gradient;
+                ctx.fill();
+                
+                ctx.restore();
+            }
+
+            draw() {
+                this.drawHeart(this.x, this.y, this.baseSize);
+            }
+
+            getClipPath() {
+                const size = this.baseSize * 1.8;
+                let pathPoints = [];
+                
+                const numPoints = 50;
+                for (let i = 0; i <= numPoints; i++) {
+                    const t = (i / numPoints) * Math.PI * 2;
+                    
+                    let x, y;
+                    if (t <= Math.PI) {
+                        const angle = t - Math.PI / 2;
+                        x = size * 16 * Math.pow(Math.sin(t), 3);
+                        y = size * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+                    } else {
+                        x = size * 16 * Math.pow(Math.sin(t), 3);
+                        y = size * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+                    }
+                    
+                    x = this.x + x / 16;
+                    y = this.y - y / 16 + size * 0.3;
+                    
+                    pathPoints.push(`${x}px ${y}px`);
+                }
+                
+                return `polygon(${pathPoints.join(', ')})`;
+            }
+
+            isDead() {
+                return this.isTrail && this.life <= 0;
+            }
+        }
+
+        const mainBlob = new Blob(mouseX, mouseY, false);
+
+        document.addEventListener('mousemove', (e) => {
+            const prevMouseX = mouseX;
+            const prevMouseY = mouseY;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            const distance = Math.sqrt(Math.pow(mouseX - prevMouseX, 2) + Math.pow(mouseY - prevMouseY, 2));
+            if (distance > 30 && blobs.length < maxBlobs) {
+                const trailHeart = new Blob(prevMouseX, prevMouseY, true);
+                trailHeart.rotation = Math.random() * Math.PI * 2;
+                blobs.push(trailHeart);
+            }
+        });
+
+        function animateBlobs() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            time += 0.02;
+            
+            for (let i = blobs.length - 1; i >= 0; i--) {
+                blobs[i].update();
+                blobs[i].draw();
+                if (blobs[i].isDead()) {
+                    blobs.splice(i, 1);
+                }
+            }
+            
+            mainBlob.update(mouseX, mouseY);
+            mainBlob.opacity = 0.12;
+            mainBlob.draw();
+
+            blobX = mainBlob.x;
+            blobY = mainBlob.y;
+
+            const clipPath = mainBlob.getClipPath();
+            
+            heroAlt.style.clipPath = clipPath;
+            heroAlt.style.transition = 'clip-path 0.08s ease-out';
+
+            let isOverDaySection = false;
+            let currentDaySection = null;
+            
+            document.querySelectorAll('.day-section').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (mouseX >= rect.left && mouseX <= rect.right &&
+                    mouseY >= rect.top && mouseY <= rect.bottom) {
+                    isOverDaySection = true;
+                    currentDaySection = section;
+                }
+            });
+
+            document.querySelectorAll('.day-background-alt').forEach(bgAlt => {
+                const parentSection = bgAlt.closest('.day-section');
+                if (parentSection === currentDaySection && isOverDaySection) {
+                    bgAlt.style.clipPath = clipPath;
+                    bgAlt.style.transition = 'clip-path 0.08s ease-out';
+                } else {
+                    bgAlt.style.clipPath = 'polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)';
+                }
+            });
+
+            requestAnimationFrame(animateBlobs);
+        }
+        animateBlobs();
+
+        // Create Day Sections
+        function createDaySection(day) {
+            const section = document.createElement('section');
+            section.className = 'day-section';
+            section.id = `day-${day.date}`;
+
+            let memoryLaneHTML = '';
+            if (day.memoryLane) {
+                memoryLaneHTML = `
+                    <div class="memory-lane-section">
+                        <h2 class="memory-lane-title">Our Memory Lane</h2>
+                        <p class="memory-lane-subtitle">Seven Days of Love</p>
+                        <div class="memory-grid">
+                            ${day.memoryLane.map((memory, idx) => `
+                                <div class="memory-item-wrapper">
+                                    <div class="memory-frame is-overlay">
+                                        <svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" stroke="currentColor" stroke-width="2"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="memory-frame is-base">
+                                        <svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="memory-img-container">
+                                        <img src="${memory.baseImg}" alt="${memory.day}" class="memory-base-img">
+                                        <img src="${memory.hoverImg}" alt="${memory.day}" class="memory-hover-img">
+                                    </div>
+                                    <div class="memory-label">
+                                        <div class="memory-day-name">${memory.day}</div>
+                                        <div class="memory-date">${memory.date}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            section.innerHTML = `
+                <img src="${day.background.main}" alt="${day.name} Background" class="day-background">
+                <img src="${day.background.alt}" alt="${day.name} Background Alt" class="day-background-alt" data-day-bg-alt="${day.date}">
+                <div class="day-overlay"></div>
+                <div class="day-content">
+                    <div class="day-header">
+                        <div class="day-number">${day.date < 10 ? '0' : ''}${day.date}</div>
+                        <h2 class="day-name">${day.name}</h2>
+                        <p class="day-date">${day.dateText}</p>
+                    </div>
+                    <div class="cards-container" data-day="${day.date}">
+                        ${day.images.map((img, idx) => `
+                            <div class="card" data-card-index="${idx}">
+                                <div class="card-image-wrapper">
+                                    <img src="${img.main}" alt="${day.name}" class="card-main-image">
+                                    <img src="${img.alt}" alt="${day.name} Alt" class="card-alt-image">
+                                    <div class="card-overlay">
+                                        <div class="card-text">${img.text}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="day-quote">
+                        <p class="quote-text">"${day.quote}"</p>
+                    </div>
+                    ${memoryLaneHTML}
+                </div>
+            `;
+
+            return section;
+        }
+
+        // Card click interaction
+        function setupCardInteractions() {
+            document.querySelectorAll('.cards-container').forEach(container => {
+                const cards = Array.from(container.querySelectorAll('.card'));
+                
+                cards.forEach((card, clickedIndex) => {
+                    card.addEventListener('click', () => {
+                        const wasActive = card.classList.contains('active');
+                        
+                        cards.forEach(c => c.classList.remove('active'));
+                        container.classList.remove('has-active');
+                        
+                        if (!wasActive) {
+                            card.classList.add('active');
+                            container.classList.add('has-active');
+                            
+                            if (clickedIndex === 0) {
+                                cards[0].style.left = '50%';
+                                cards[1].style.left = '15%';
+                                cards[2].style.left = '85%';
+                            } else if (clickedIndex === 1) {
+                                cards[0].style.left = '85%';
+                                cards[1].style.left = '50%';
+                                cards[2].style.left = '15%';
+                            } else if (clickedIndex === 2) {
+                                cards[0].style.left = '15%';
+                                cards[1].style.left = '85%';
+                                cards[2].style.left = '50%';
+                            }
+                        } else {
+                            cards[0].style.left = '';
+                            cards[1].style.left = '';
+                            cards[2].style.left = '';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Initialize
+        function init() {
+            const currentDay = getESTDate();
+            const daySections = document.getElementById('daySections');
+
+            days.forEach(day => {
+                if (day.date === 7 || day.date <= currentDay) {
+                    const section = createDaySection(day);
+                    daySections.appendChild(section);
+                }
+            });
+
+            setupCardInteractions();
+        }
+
+        init();
+    </script>
+</body>
+</html>
