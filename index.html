@@ -36,7 +36,7 @@
 
         /* Header */
         .header {
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
@@ -46,6 +46,18 @@
             justify-content: space-between;
             align-items: flex-start;
             background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .header.on-memory-lane {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .header.on-memory-lane h1,
+        .header.on-memory-lane p,
+        .header.on-memory-lane .header-right {
+            color: #fff;
         }
 
         .header-left h1 {
@@ -409,6 +421,377 @@
             color: #333;
         }
 
+        /* Memory Lane Section - Helmet Grid Style */
+        .memory-lane-section {
+            position: relative;
+            width: 100vw;
+            min-height: 100vh;
+            scroll-snap-align: start;
+            margin-top: 0;
+            padding: 180px 40px;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .memory-lane-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://res.cloudinary.com/da02bfpol/image/upload/c_fill,w_2560,h_1440,g_auto/v1771129423/IMG_0211_2_a346et.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.15;
+            z-index: 0;
+            filter: blur(2px);
+        }
+
+        .memory-lane-header {
+            position: relative;
+            max-width: 1600px;
+            margin: 0 auto 80px;
+            z-index: 100;
+        }
+
+        .memory-toggle-container {
+            position: absolute;
+            bottom: -60px;
+            right: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            pointer-events: all;
+            cursor: pointer;
+        }
+
+        .memory-toggle-label {
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            pointer-events: all;
+            z-index: 1001;
+        }
+
+        .toggle-switch:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .toggle-switch.active {
+            background: #9EFF00;
+            border-color: #9EFF00;
+        }
+
+        .toggle-switch.active:hover {
+            background: #8EE000;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        .memory-lane-title {
+            text-align: center;
+            font-size: 56px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+            display: inline-block;
+            width: 100%;
+            cursor: default;
+            transition: color 0.3s ease;
+        }
+
+        .memory-lane-title .title-main {
+            position: relative;
+            z-index: 2;
+            transition: opacity 0.5s ease;
+        }
+
+        .memory-lane-title .title-alt {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #9EFF00;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        .memory-lane-title:hover .title-main {
+            opacity: 0;
+        }
+
+        .memory-lane-title:hover .title-alt {
+            opacity: 1;
+        }
+
+        .memory-lane-title::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 56px;
+            font-weight: 400;
+            letter-spacing: 3px;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(158, 255, 0, 0.3);
+            z-index: 0;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1.05);
+            }
+        }
+
+        .memory-lane-subtitle {
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            margin-bottom: 0;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .memory-item-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 407/411;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+            overflow: visible;
+        }
+
+        .memory-item-wrapper:hover {
+            transform: translateY(-10px);
+        }
+
+        .memory-item-wrapper.revealed .memory-content {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .memory-item-wrapper.revealed .memory-blank {
+            opacity: 0;
+        }
+
+        .memory-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .memory-frame svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .memory-frame.is-overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .memory-item-wrapper:hover .memory-frame.is-overlay {
+            opacity: 1;
+        }
+
+        .memory-frame.is-overlay path {
+            stroke: #9EFF00;
+        }
+
+        .memory-frame.is-base path {
+            stroke: #333;
+        }
+
+        .memory-img-container {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 40px;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .memory-blank {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            z-index: 2;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+        }
+
+        .memory-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            z-index: 1;
+        }
+
+        .memory-base-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            min-width: 100%;
+            min-height: 100%;
+            max-width: none;
+            max-height: none;
+        }
+
+        .memory-text-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 70%, transparent 100%);
+            color: #fff;
+            z-index: 3;
+        }
+
+        .memory-text {
+            font-size: 16px;
+            line-height: 1.4;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .memory-item-wrapper:hover .memory-blank {
+            opacity: 0;
+        }
+
+        .memory-item-wrapper:hover .memory-content {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .memory-label {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            right: 20px;
+            z-index: 3;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .memory-day-name {
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: capitalize;
+            color: #fff;
+            transition: color 0.3s ease;
+            text-align: left;
+        }
+
+        .memory-date {
+            font-size: 16px;
+            letter-spacing: 2px;
+            font-weight: 400;
+            color: #fff;
+            transition: color 0.3s ease;
+            text-align: right;
+        }
+
+        .memory-item-wrapper:hover .memory-day-name,
+        .memory-item-wrapper:hover .memory-date {
+            color: #9EFF00;
+        }
+
+        @media (max-width: 1400px) {
+            .memory-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .memory-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .memory-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .memory-lane-section {
+                padding: 60px 20px;
+            }
+        }
+
         /* Scroll Hint */
         .scroll-hint {
             position: fixed;
@@ -449,6 +832,15 @@
 
             .quote-text {
                 font-size: 36px;
+            }
+
+            .memory-lane-title {
+                font-size: 42px;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 30px;
             }
         }
 
@@ -493,6 +885,19 @@
             .card-text {
                 font-size: 20px;
             }
+
+            .memory-lane-title {
+                font-size: 32px;
+            }
+
+            .memory-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 20px;
+            }
+
+            .memory-lane-section {
+                padding: 60px 20px;
+            }
         }
     </style>
 </head>
@@ -513,8 +918,6 @@
         <!-- Hero Section -->
         <section class="hero-section" id="heroSection">
             <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=1920&h=1080&fit=crop" alt="Hero" class="hero-background" id="heroMain">
-            <!-- <img src="https://res.cloudinary.com/da02bfpol/image/upload/v1770460188/PXL_20250924_014941263_zwe10e.jpg" alt="Hero" class="hero-background" id="heroMain"> -->
-            <!-- <img src="https://res.cloudinary.com/da02bfpol/image/upload/v1770446709/PXL_20250205_030136908.MP_flv03l.jpg" alt="Hero" class="hero-background" id="heroMain"> -->
             <img src="https://res.cloudinary.com/da02bfpol/image/upload/v1770461440/IMG_5731_icmvzo.jpg" alt="Hero Alt" class="hero-background-alt" id="heroAlt">
             <div class="hero-overlay"></div>
             <div class="hero-content">
@@ -522,13 +925,30 @@
                 <p class="hero-subtitle">Eight Days. Two souls. One Story. Countless memories.</p>
                 <p class ="hero-subtitle">A celebration of us , of our journey , of our tomorrow.</p>
                 <p class="hero-subtitle">Though miles apart, forever close at heart.</p>
-                <!-- <p class="hero-subtitle">Here's to us, and the love that grows stronger with each passing day.</p> -->
                 <p class="hero-subtitle">Happy Valentine's Week, Kanna.</p>
             </div>
         </section>
 
         <!-- Day Sections will be inserted here -->
         <div id="daySections"></div>
+
+        <!-- Memory Lane Section - Independent -->
+        <section class="memory-lane-section">
+            <div class="memory-lane-header">
+                <h2 class="memory-lane-title" data-text="Her Beautiful Journey">
+                    <span class="title-main">Her Beautiful Journey</span>
+                    <span class="title-alt">A Story Worth Celebrating</span>
+                </h2>
+                <p class="memory-lane-subtitle">Every Moment, Every Memory, Every Smile</p>
+                <div class="memory-toggle-container">
+                    <span class="memory-toggle-label">Show All</span>
+                    <div class="toggle-switch" id="memoryToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="memory-grid" id="memoryGrid"></div>
+        </section>
     </div>
 
     <!-- Scroll Hint -->
@@ -542,10 +962,8 @@
                 dateText: "February 7",
                 icon: "🌹",
                 background: {
-                    // alt: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=1920&h=1080&fit=crop",
                     alt: "https://png.pngtree.com/png-clipart/20241129/original/pngtree-beautiful-roses-in-different-colors-png-image_17420512.png",
                     main: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?w=1920&h=1080&fit=crop"
-                   
                 },
                 images: [
                     { 
@@ -573,9 +991,7 @@
                 icon: "💍",
                 background: {
                     main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770446711/PXL_20250925_202855835.MP_lrk9dz.jpg",
-                    // alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461437/IMG_2882_hdoj34.jpg"
                     alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770528449/20251212_162735-IMG_STYLE_g6uc0k.jpg"
-
                 },
                 images: [
                     { 
@@ -728,11 +1144,11 @@
                         alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956142/IMG_8732_lfdjyj.jpg",
                         text: "Time stops when we kiss and the world fades away"
                     },
-{ 
+                    { 
                         main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956143/IMG_6840_zr13yf.jpg",
                         alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770956143/IMG_6810_lzdm1h.jpg",
                         text: "Sealed with forever"
-                    },
+                    }
                 ],
                 quote: "Every kiss is a promise of forever, a silent vow that says 'I love you' without words.Happy Kiss Day, Kanna."
             },
@@ -743,26 +1159,150 @@
                 icon: "❤️",
                 background: {
                     main: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=1920&h=1080&fit=crop",
-                    alt: "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=1920&h=1080&fit=crop"
+                    alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1771125600/IMG_1287_is5zc6.jpg"
                 },
                 images: [
                     { 
-                        main: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=350&h=480&fit=crop",
-                        alt: "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=350&h=480&fit=crop",
-                        text: "And I'd choose you again"
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461437/IMG_3125_mlas4r.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770464107/IMG_3137_fnhm3n.jpg",
+                        text: "Every memory, every moment, all leading to this day"
                     },
                     { 
-                        main: "https://images.unsplash.com/photo-1516589091380-5d8e87df6999?w=350&h=480&fit=crop",
-                        alt: "https://images.unsplash.com/photo-1445633883498-7f9922d37a3f?w=350&h=480&fit=crop",
-                        text: "Every day"
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461436/IMG_3643_2_tdusa9.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770526825/IMG_3644_xuj8xd.jpg",
+                        text: "A week of love, a lifetime of memories"
                     },
                     { 
-                        main: "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23?w=350&h=480&fit=crop",
-                        alt: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=350&h=480&fit=crop",
-                        text: "Forever and always"
+                        main: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871786/IMG_3638_upadlb.jpg",
+                        alt: "https://res.cloudinary.com/da02bfpol/image/upload/v1770871785/IMG_3674_ibtxyp.jpg",
+                        text: "Forever and always, my Valentine"
                     }
                 ],
                 quote: "My eternal valentine, forever and always"
+            }
+        ];
+
+        // Memory Lane - Her life journey from beginning to now
+        const memories = [
+            {
+                day: "Her Parents",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771066733/IMG-20250319-WA0013_v2kt6t.jpg",
+                date: "The Beginning",
+                text: "Where it all began - the love that brought her into this world"
+            },
+            {
+                day: "Born to Shine",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771065096/FullSizeRender_3_rnzizp.jpg",
+                date: "Early Days",
+                text: "A star was born, destined to light up the world with her smile"
+            },
+            {
+                day: "First Birthday",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771065096/IMG_5541_Original_Original_dt1b1z.jpg",
+                date: "Growing Up",
+                text: "One year old, tears and all - even in her cries, she was beautiful"
+            },
+            {
+                day: "Grandparents",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771068453/FullSizeRender_33_bvlr0x.jpg",
+                date: "Blessed",
+                text: "Wrapped in her grandparents' love - the warmth that shaped her heart"
+            },
+            {
+                day: "Sisterhood",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771108063/afb44636-ab94-4d9f-b60a-b1f007c46071_nxtxz1.jpg",
+                date: "Buddi for Life",
+                text: "The bond that blossomed into a lifelong friendship and sisterhood"
+            },
+            {
+                day: "Drama Days",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771069176/Snapchat-1634367142_jzpbjb.jpg",
+                date: "Learning Years",
+                text: "Dramas - childhood memories that shaped her."
+            },
+            {
+                day: "School Days",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771065096/IMG-20161030-WA0040_zk1ycn.jpg",
+                date: "Memories",
+                text: "The school days filled with laughter, learning (pain), and unforgettable moments"
+            },
+            {
+                day: "Sports",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771108063/PHOTO-2026-02-14-14-22-50_vgygio.jpg",
+                date: "Hockey",
+                text: "The sport that ignited her passion gave her unforgettable memories"
+            },
+            {
+                day: "Friendships",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771124223/PHOTO-2026-02-14-18-52-51_zq5upf.jpg",
+                date: "Bonds Forever",
+                text: "The friends who became family along the way"
+            },
+            {
+                day: "Extended Family",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771125600/IMG_2649_Original_emczxd.jpg",
+                date: "Loved Ones",
+                text: "The extended family that surrounded her with love and support"
+            },
+            {
+                day: "First Friend & Love",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771123959/IMG_5078_tcpypm.jpg",
+                date: "Amma",
+                text: "The first love that taught her the meaning of unconditional love and sacrifice"
+            },
+            {
+                day: "Masters",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771124942/Screenshot_2026-02-14_at_7.08.16_PM_rtihw4.png",
+                date: "Milestones",
+                text: "Every success, every triumph, every proud moment"
+            },
+            {
+                day: "Work & Growth",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771123579/PHOTO-2025-12-09-09-32-21_lkvjl8.jpg",
+                date: "MTA",
+                text: "The journey of growth, learning, and making a mark in the world"
+            },
+            {
+                day: "Beauty & Style",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771127016/98C9D1EA-033E-4433-929E-9A1DF2045951-preview_z4nir0.jpg",
+                date: "Elegance",
+                text: "The beauty that radiates from within and shines through her style and grace"
+            },
+            {
+                day: "Adventures",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771126705/FullSizeRender_eed1yh.jpg",
+                date: "Exploring",
+                text: "Every place she's been, every memory she's made"
+            },
+            {
+                day: "Concerts",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461437/IMG_2882_hdoj34.jpg",
+                date: "Music & Memories",
+                text: "The songs that became the soundtrack of her life and our love story"
+            },
+            {
+                day: "New York",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1770461438/IMG_3764_cce5l2.jpg",
+                date: "City of Dreams",
+                text: "The city that captured her heart and became a backdrop for our memories"
+            },
+            {
+                day: "Travels",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771128974/IMG_5697_w47aii.jpg",
+                date: "Explore",
+                text: "Every date, every trip, every adventure we shared together"
+            },
+            {
+                day: "Dates & Moments",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771128443/IMG_4282_ztgln7.jpg",
+                date: "Memories",
+                text: "Dinner dates and movie nights, walks in the park and late-night talks, every moment etched in my heart"
+            },
+            {
+                day: "Forever",
+                baseImg: "https://res.cloudinary.com/da02bfpol/image/upload/v1771128779/IMG_3151_tlubeb_aqnnnq.jpg",
+                date: "Eternal",
+                text: "Will you be my forever valentine ? "
             }
         ];
 
@@ -778,11 +1318,6 @@
         const canvas = document.getElementById('blobCanvas');
         const ctx = canvas.getContext('2d');
         const heroAlt = document.getElementById('heroAlt');
-        
-        // Debug: Check if elements exist
-        console.log('Canvas:', canvas);
-        console.log('HeroAlt:', heroAlt);
-        console.log('HeroAlt src:', heroAlt ? heroAlt.src : 'not found');
         
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -818,7 +1353,6 @@
 
             update(targetX, targetY) {
                 if (!this.isTrail) {
-                    // Main heart follows cursor smoothly with delay
                     const dx = targetX - this.x;
                     const dy = targetY - this.y;
                     this.vx += dx * 0.1;
@@ -828,10 +1362,8 @@
                     this.x += this.vx;
                     this.y += this.vy;
                     
-                    // Subtle pulsing animation
                     this.scale = 1 + Math.sin(time * 3) * 0.1;
                 } else {
-                    // Trail hearts fade out and float up slightly
                     this.life -= 0.025;
                     this.opacity = (this.life / this.maxLife) * 0.08;
                     this.y -= 0.5;
@@ -844,21 +1376,17 @@
                 ctx.scale(this.scale, this.scale);
                 ctx.rotate(this.rotation);
                 
-                // Draw heart shape using bezier curves
                 ctx.beginPath();
                 ctx.moveTo(0, size * 0.3);
                 
-                // Left half of heart
                 ctx.bezierCurveTo(-size * 0.5, -size * 0.3, -size, -size * 0.1, -size, size * 0.3);
                 ctx.bezierCurveTo(-size, size * 0.5, -size * 0.5, size * 0.7, 0, size);
                 
-                // Right half of heart
                 ctx.bezierCurveTo(size * 0.5, size * 0.7, size, size * 0.5, size, size * 0.3);
                 ctx.bezierCurveTo(size, -size * 0.1, size * 0.5, -size * 0.3, 0, size * 0.3);
                 
                 ctx.closePath();
                 
-                // Soft gradient fill
                 const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, size);
                 gradient.addColorStop(0, `rgba(255, 100, 150, ${this.opacity * 0.4})`);
                 gradient.addColorStop(0.5, `rgba(255, 150, 180, ${this.opacity * 0.2})`);
@@ -878,25 +1406,20 @@
                 const size = this.baseSize * 1.8;
                 let pathPoints = [];
                 
-                // Generate points along the heart shape for clip-path
                 const numPoints = 50;
                 for (let i = 0; i <= numPoints; i++) {
                     const t = (i / numPoints) * Math.PI * 2;
                     
-                    // Parametric heart shape equation
                     let x, y;
                     if (t <= Math.PI) {
-                        // Top half (two bumps)
                         const angle = t - Math.PI / 2;
                         x = size * 16 * Math.pow(Math.sin(t), 3);
                         y = size * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
                     } else {
-                        // Bottom half (point)
                         x = size * 16 * Math.pow(Math.sin(t), 3);
                         y = size * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
                     }
                     
-                    // Scale and position
                     x = this.x + x / 16;
                     y = this.y - y / 16 + size * 0.3;
                     
@@ -919,11 +1442,9 @@
             mouseX = e.clientX;
             mouseY = e.clientY;
 
-            // Create trail hearts on movement
             const distance = Math.sqrt(Math.pow(mouseX - prevMouseX, 2) + Math.pow(mouseY - prevMouseY, 2));
             if (distance > 30 && blobs.length < maxBlobs) {
                 const trailHeart = new Blob(prevMouseX, prevMouseY, true);
-                // Random rotation for trail hearts
                 trailHeart.rotation = Math.random() * Math.PI * 2;
                 blobs.push(trailHeart);
             }
@@ -934,7 +1455,6 @@
             
             time += 0.02;
             
-            // Update and draw trail hearts
             for (let i = blobs.length - 1; i >= 0; i--) {
                 blobs[i].update();
                 blobs[i].draw();
@@ -943,22 +1463,18 @@
                 }
             }
             
-            // Update and draw main heart
             mainBlob.update(mouseX, mouseY);
             mainBlob.opacity = 0.12;
             mainBlob.draw();
 
-            // Update image reveals with heart shape
             blobX = mainBlob.x;
             blobY = mainBlob.y;
 
             const clipPath = mainBlob.getClipPath();
             
-            // Hero section always has reveal
             heroAlt.style.clipPath = clipPath;
             heroAlt.style.transition = 'clip-path 0.08s ease-out';
 
-            // Check which day section we're currently in
             let isOverDaySection = false;
             let currentDaySection = null;
             
@@ -971,7 +1487,6 @@
                 }
             });
 
-            // Apply heart reveal to day section backgrounds ONLY in current section
             document.querySelectorAll('.day-background-alt').forEach(bgAlt => {
                 const parentSection = bgAlt.closest('.day-section');
                 if (parentSection === currentDaySection && isOverDaySection) {
@@ -986,7 +1501,7 @@
         }
         animateBlobs();
 
-        // Create Day Sections - ONLY show unlocked days
+        // Create Day Sections
         function createDaySection(day) {
             const section = document.createElement('section');
             section.className = 'day-section';
@@ -1024,6 +1539,65 @@
             return section;
         }
 
+        // Create Memory Lane Grid
+        function createMemoryLane() {
+            const memoryGrid = document.getElementById('memoryGrid');
+            
+            memories.forEach((memory, idx) => {
+                const memoryItem = document.createElement('div');
+                memoryItem.className = 'memory-item-wrapper';
+                memoryItem.innerHTML = `
+                    <div class="memory-frame is-overlay">
+                        <svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 1h390.89a7 7 0 0 1 7 7v356.983a7 7 0 0 1-7 7H263.329a23.999 23.999 0 0 0-18.766 9.038l-16.499 20.694A21.999 21.999 0 0 1 210.862 410H8a7 7 0 0 1-7-7V8a7 7 0 0 1 7-7Z" stroke="currentColor" stroke-width="2"></path>
+                        </svg>
+                    </div>
+                    <div class="memory-frame is-base">
+                        <svg width="100%" height="100%" viewBox="0 0 407 411" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 .5h390.89a7.5 7.5 0 0 1 7.5 7.5v356.983a7.5 7.5 0 0 1-7.5 7.5H263.329a23.502 23.502 0 0 0-18.375 8.849l-16.499 20.695a22.502 22.502 0 0 1-17.593 8.473H8A7.5 7.5 0 0 1 .5 403V8A7.5 7.5 0 0 1 8 .5Z" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+                        </svg>
+                    </div>
+                    <div class="memory-img-container">
+                        <div class="memory-blank"></div>
+                        <div class="memory-content">
+                            <img src="${memory.baseImg}" alt="${memory.day}" class="memory-base-img">
+                            <div class="memory-text-overlay">
+                                <p class="memory-text">${memory.text}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="memory-label">
+                        <div class="memory-day-name">${memory.day}</div>
+                        <div class="memory-date">${memory.date}</div>
+                    </div>
+                `;
+                memoryGrid.appendChild(memoryItem);
+            });
+
+            // Setup toggle functionality
+            setupMemoryToggle();
+        }
+
+        // Toggle all photos reveal
+        function setupMemoryToggle() {
+            const toggle = document.getElementById('memoryToggle');
+            const memoryItems = document.querySelectorAll('.memory-item-wrapper');
+            let isRevealed = false;
+
+            toggle.addEventListener('click', () => {
+                isRevealed = !isRevealed;
+                toggle.classList.toggle('active', isRevealed);
+                
+                memoryItems.forEach(item => {
+                    if (isRevealed) {
+                        item.classList.add('revealed');
+                    } else {
+                        item.classList.remove('revealed');
+                    }
+                });
+            });
+        }
+
         // Card click interaction
         function setupCardInteractions() {
             document.querySelectorAll('.cards-container').forEach(container => {
@@ -1033,34 +1607,27 @@
                     card.addEventListener('click', () => {
                         const wasActive = card.classList.contains('active');
                         
-                        // Remove active from all cards
                         cards.forEach(c => c.classList.remove('active'));
                         container.classList.remove('has-active');
                         
-                        // If wasn't active, make it active and rotate positions
                         if (!wasActive) {
                             card.classList.add('active');
                             container.classList.add('has-active');
                             
-                            // Circular rotation based on which card is clicked
                             if (clickedIndex === 0) {
-                                // Click Card 1 → Card 1 to center, Card 2 to left, Card 3 to right
-                                cards[0].style.left = '50%';  // Card 1 to center
-                                cards[1].style.left = '15%';  // Card 2 to left (Card 1's position)
-                                cards[2].style.left = '85%';  // Card 3 to right
+                                cards[0].style.left = '50%';
+                                cards[1].style.left = '15%';
+                                cards[2].style.left = '85%';
                             } else if (clickedIndex === 1) {
-                                // Click Card 2 → Card 2 to center, Card 3 to left, Card 1 to right
-                                cards[0].style.left = '85%';  // Card 1 to right
-                                cards[1].style.left = '50%';  // Card 2 to center
-                                cards[2].style.left = '15%';  // Card 3 to left (Card 1's position)
+                                cards[0].style.left = '85%';
+                                cards[1].style.left = '50%';
+                                cards[2].style.left = '15%';
                             } else if (clickedIndex === 2) {
-                                // Click Card 3 → Card 3 to center, Card 1 to left, Card 2 to middle-right
-                                cards[0].style.left = '15%';  // Card 1 to left
-                                cards[1].style.left = '85%';  // Card 2 to right (Card 3's position)
-                                cards[2].style.left = '50%';  // Card 3 to center
+                                cards[0].style.left = '15%';
+                                cards[1].style.left = '85%';
+                                cards[2].style.left = '50%';
                             }
                         } else {
-                            // Reset to default positions
                             cards[0].style.left = '';
                             cards[1].style.left = '';
                             cards[2].style.left = '';
@@ -1075,17 +1642,34 @@
             const currentDay = getESTDate();
             const daySections = document.getElementById('daySections');
 
-            // ONLY create sections for unlocked days (Feb 7 always + current day and before)
             days.forEach(day => {
-                // Show Rose Day (7) always, plus any day <= current day
                 if (day.date === 7 || day.date <= currentDay) {
                     const section = createDaySection(day);
                     daySections.appendChild(section);
                 }
             });
 
-            // Setup card click interactions
             setupCardInteractions();
+            createMemoryLane();
+            setupHeaderObserver();
+        }
+
+        // Setup header color change on memory lane
+        function setupHeaderObserver() {
+            const header = document.querySelector('.header');
+            const memoryLaneSection = document.querySelector('.memory-lane-section');
+            const scrollContainer = document.getElementById('scrollContainer');
+
+            scrollContainer.addEventListener('scroll', () => {
+                const memoryRect = memoryLaneSection.getBoundingClientRect();
+                
+                // Check if memory lane is in viewport
+                if (memoryRect.top < 200 && memoryRect.bottom > 0) {
+                    header.classList.add('on-memory-lane');
+                } else {
+                    header.classList.remove('on-memory-lane');
+                }
+            });
         }
 
         init();
